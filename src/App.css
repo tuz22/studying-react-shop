@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.main-banner-bg {
+  height: 500px;
+  background: #bebebc;
+}
+.main-banner {
+  height: 500px;
+  background: url('/public/assets/banner.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
