@@ -19,7 +19,7 @@ function App() {
           <Navbar.Brand href="#home">SinShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/detail/0') }}>Detail</Nav.Link>
             <Nav.Link onClick={() => { navigate(1) }}>앞으로가기</Nav.Link>
             <Nav.Link onClick={() => { navigate(-1) }}>뒤로가기</Nav.Link>
           </Nav>
