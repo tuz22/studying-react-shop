@@ -57,20 +57,6 @@ function App() {
                 console.log('실패!')
               })
 
-              /* AJAX로 데이터 보낼 때 */
-              axios.post('/데이터 보낼 URL', {데이터명 : '값'})
-
-              /* AJAX로 데이터 여러개 동시에 받을 떄 - 여러개 요청이 다 성공했을 때의 코드를 짜고 싶으면 사용*/
-              Promise.all([ axios.get('/URL1'), axios.get('/URL2') ])
-              .then(() => {
-
-              })
-
-              /* 자바스크립트 함수 fetch로도 데이터 전달 가능 */
-              fetch('URL')
-              // .then( 결과 => 결과.json() )
-              .then( data => { } )
-              
             }}>버튼</button>
           </>
         } />

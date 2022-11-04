@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Nav} from 'react-bootstrap';
 
 function Detail(props){
-  /* 2초 뒤에 사라지는 박스 */
   let [alert, setAlert] = useState(true)
-
+  let [tab, setTab] = useState(0)
+  
+  /* 2초 뒤에 사라지는 박스 */
   useEffect(() => { // useEffect 안에 있는 코드는 HTML 랜더링 후에 동작
     let timerBox = setTimeout(() => { setAlert(false) }, 2000);
     console.log('리턴문 밖')
@@ -52,8 +54,43 @@ function Detail(props){
           <button className="btn btn-danger">주문하기</button> 
         </div>
       </div>
+
+      {/* 탭 UI */}
+      <Nav variant="tabs"  defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link onClick={() => { setTab(0) }} eventKey="link0">버튼0</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => { setTab(1) }} eventKey="link1">버튼1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => { setTab(2) }} eventKey="link2">버튼2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      {/* <TabContent tab={tab}/> */}
+      <TabContent2 tab={tab}/>
+
+
+
     </div>
   )
+  function TabContent(props){ // (props) 대신 props 이름 사용 가능 -> ( {tab} )
+
+    if (props.tab == 0) { // = if (tab == 0)
+      return <div>내용0</div>
+    }
+    if (props.tab == 1){
+      return <div>내용1</div>
+    }
+    if (props.tab ==2){
+      return <div>내용2</div>
+    }
+  }
+
+  function TabContent2({tab}){
+
+    return [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tab]
+  }
 }
 
 export default Detail;
