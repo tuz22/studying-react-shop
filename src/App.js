@@ -4,10 +4,11 @@ import './App.css';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/detail';
+import axios from 'axios';
 
 function App() {
 
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate(); // 페이지 이동을 도와줌  *훅(= 유용한 함수들이 들어있음)
 
   return (
@@ -41,8 +42,38 @@ function App() {
                 }
               </div>
             </div>
+            <button onClick={() => {
+              console.log('로딩중...');
+
+              /* AJAX로 데이터 받을 때 */
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+              .then((result) => {
+                console.log(result.data)
+                let copy = [...shoes, ...result.data];
+                setShoes(copy);
+                console.log('로딩 완료');
+              })
+              .catch(() => {
+                console.log('실패!')
+              })
+
+              /* AJAX로 데이터 보낼 때 */
+              axios.post('/데이터 보낼 URL', {데이터명 : '값'})
+
+              /* AJAX로 데이터 여러개 동시에 받을 떄 - 여러개 요청이 다 성공했을 때의 코드를 짜고 싶으면 사용*/
+              Promise.all([ axios.get('/URL1'), axios.get('/URL2') ])
+              .then(() => {
+
+              })
+
+              /* 자바스크립트 함수 fetch로도 데이터 전달 가능 */
+              fetch('URL')
+              // .then( 결과 => 결과.json() )
+              .then( data => { } )
+              
+            }}>버튼</button>
           </>
-        }/>
+        } />
       
         <Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/>{/* URL 파라미터: /:파라미터값 */}
         <Route path="*" element={<div>404 Pages</div>} /> // * : Route에 정해두지 않은 모든 주소

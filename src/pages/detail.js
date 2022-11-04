@@ -1,24 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-/* Lifecycle hook 다는 방법 */
-// useEffect(() => {
-
-// })
-
-/* 예전 방법 */
-// class Detail2 extends React.Component {
-//   componentDidMount(){
-
-//   }
-//   componentDidUpdate(){
-
-//   }
-//   componentWillUnmount(){
-
-//   }
-// }
-
 function Detail(props){
   /* 2초 뒤에 사라지는 박스 */
   let [alert, setAlert] = useState(true)
