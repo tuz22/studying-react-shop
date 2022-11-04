@@ -47,3 +47,12 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+/* 컴포넌트 전환 */
+.start {
+  opacity: 0;
+}
+.end {
+  opacity: 1;
+  transition: opacity 0.5s;
+}

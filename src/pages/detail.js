@@ -70,8 +70,6 @@ function Detail(props){
       {/* <TabContent tab={tab}/> */}
       <TabContent2 tab={tab}/>
 
-
-
     </div>
   )
   function TabContent(props){ // (props) 대신 props 이름 사용 가능 -> ( {tab} )
@@ -89,7 +87,22 @@ function Detail(props){
 
   function TabContent2({tab}){
 
-    return [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tab]
+    let [fade, setFade] = useState('')
+    useEffect(() => {
+      let a = setTimeout(() => { setFade('end') }, 10)
+      /* tab state가 변할 때 end를 뗏다가 부착해야 CSS 제대로 적용됨 */
+      /* automatic batching 기능 : state변경함수() 사용할때마다 재렌더링이 되는게 아니라 마지막 state변경함수()에 재렌더링*/
+      
+      return () => {
+        // setFade('')  /* automatic batching 기능 때문에 이 코드 제대로 실행 x */
+        clearTimeout(a)
+      }
+
+    }, [tab])
+
+    return (<div className={'start ' + fade}> {/* 변수를 HTML 중간에 넣으려면 중괄호 사용. ! 클래스명은 띄어쓰기 사용해야 여러개 가능*/} 
+      { [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
+    </div>) /* 리턴할 코드가 길어지면 ()쳐주기 */
   }
 }
 
