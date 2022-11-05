@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Nav} from 'react-bootstrap';
 
+import {Context1} from './../App.js' // Context API 사용 1. Context를 import
+
 function Detail(props){
+
+  let {stock} = useContext() // Context API 사용 2. useContext(Context) - 사용시 보관함 해체
   let [alert, setAlert] = useState(true)
   let [tab, setTab] = useState(0)
   
@@ -41,6 +45,7 @@ function Detail(props){
         : null
       }
       { count }
+      { stock } {/* Context API 사용 3. 사용할 Context 변수명 쓰기 */}
       <button onClick={() => { setCount(count+1) }}>버튼</button>
       <input onChange={(e) => { setNum(e.target.value) }} />
       <div className="row">
@@ -68,7 +73,7 @@ function Detail(props){
         </Nav.Item>
       </Nav>
       {/* <TabContent tab={tab}/> */}
-      <TabContent2 tab={tab}/>
+      <TabContent2 shoes={props.shoes} tab={tab}/>
 
     </div>
   )
@@ -88,6 +93,7 @@ function Detail(props){
   function TabContent2({tab}){
 
     let [fade, setFade] = useState('')
+    let {stock} = useContext(Context1) // Context API 사용 4. 자식 컴포넌트에서도 props 없이 사용 가능
     useEffect(() => {
       let a = setTimeout(() => { setFade('end') }, 10)
       /* tab state가 변할 때 end를 뗏다가 부착해야 CSS 제대로 적용됨 */
@@ -100,9 +106,11 @@ function Detail(props){
 
     }, [tab])
 
-    return (<div className={'start ' + fade}> {/* 변수를 HTML 중간에 넣으려면 중괄호 사용. ! 클래스명은 띄어쓰기 사용해야 여러개 가능*/} 
-      { [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
-    </div>) /* 리턴할 코드가 길어지면 ()쳐주기 */
+    return (
+      <div className={'start ' + fade}> {/* 변수를 HTML 중간에 넣으려면 중괄호 사용. ! 클래스명은 띄어쓰기 사용해야 여러개 가능*/} 
+        { [ <div>{shoes[0].title}</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
+      </div>
+    ) /* 리턴할 코드가 길어지면 ()쳐주기 */
   }
 }
 

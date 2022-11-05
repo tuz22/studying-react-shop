@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import './App.css';
 import data from './data.js';
@@ -6,9 +6,12 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/detail';
 import axios from 'axios';
 
+let Context1 = createContext() // Context API 사용 세팅 1. context란 보관함을 하나 만들어줌
+
 function App() {
 
   let [shoes, setShoes] = useState(data);
+  let [stock] = useState([10, 11, 12]) // 재고
   let navigate = useNavigate(); // 페이지 이동을 도와줌  *훅(= 유용한 함수들이 들어있음)
 
   return (
@@ -61,7 +64,12 @@ function App() {
           </>
         } />
       
-        <Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/>{/* URL 파라미터: /:파라미터값 */}
+        {/* <Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/> URL 파라미터: /:파라미터값 */}
+        <Route path="/detail/:id" element={ 
+          <Context1.Provider value={ {stock, shoes} }> {/* Context API 사용 세팅 2. <Context>로 원하는 컴포넌트 감싸기 */}
+            <Detail shoes={shoes}/> {/* value={ {넘길 값1 넣기, 넘길 값2 넣기} } */}
+          </Context1.Provider>
+        }/>
         <Route path="*" element={<div>404 Pages</div>} /> // * : Route에 정해두지 않은 모든 주소
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버</div>} /> {/* <Route>태그안에 태그 사용:  Nested Routes */}
