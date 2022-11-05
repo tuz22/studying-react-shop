@@ -6,7 +6,7 @@ import {Context1} from './../App.js' // Context API 사용 1. Context를 import
 
 function Detail(props){
 
-  let {stock} = useContext() // Context API 사용 2. useContext(Context) - 사용시 보관함 해체
+  let {stock} = useContext(Context1) // Context API 사용 2. useContext(Context) - 사용시 보관함 해체
   let [alert, setAlert] = useState(true)
   let [tab, setTab] = useState(0)
   
@@ -73,7 +73,7 @@ function Detail(props){
         </Nav.Item>
       </Nav>
       {/* <TabContent tab={tab}/> */}
-      <TabContent2 shoes={props.shoes} tab={tab}/>
+      <TabContent2 tab={tab}/>
 
     </div>
   )
@@ -108,7 +108,7 @@ function Detail(props){
 
     return (
       <div className={'start ' + fade}> {/* 변수를 HTML 중간에 넣으려면 중괄호 사용. ! 클래스명은 띄어쓰기 사용해야 여러개 가능*/} 
-        { [ <div>{shoes[0].title}</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
+        { [ <div>{stock}</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
       </div>
     ) /* 리턴할 코드가 길어지면 ()쳐주기 */
   }

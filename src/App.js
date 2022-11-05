@@ -6,7 +6,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/detail';
 import axios from 'axios';
 
-let Context1 = createContext() // Context API 사용 세팅 1. context란 보관함을 하나 만들어줌
+export let Context1 = createContext() // Context API 사용 세팅 1. context란 state 보관함을 하나 만들어줌
 
 function App() {
 
@@ -67,7 +67,7 @@ function App() {
         {/* <Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/> URL 파라미터: /:파라미터값 */}
         <Route path="/detail/:id" element={ 
           <Context1.Provider value={ {stock, shoes} }> {/* Context API 사용 세팅 2. <Context>로 원하는 컴포넌트 감싸기 */}
-            <Detail shoes={shoes}/> {/* value={ {넘길 값1 넣기, 넘길 값2 넣기} } */}
+            <Detail shoes={shoes}/> {/* Context API 사용 세팅 3. value={ {넘길 값1 넣기, 넘길 값2 넣기} } */}
           </Context1.Provider>
         }/>
         <Route path="*" element={<div>404 Pages</div>} /> // * : Route에 정해두지 않은 모든 주소
