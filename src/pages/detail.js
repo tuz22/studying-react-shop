@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Nav} from 'react-bootstrap';
 
-import {Context1} from './../App.js' // Context API 사용 1. Context를 import
+import {Context1} from '../App.js' // Context API 사용 1. Context를 import
 
 function Detail(props){
 

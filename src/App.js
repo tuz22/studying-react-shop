@@ -3,8 +3,9 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import './App.css';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './pages/detail';
+import Detail from './pages/Detail';
 import axios from 'axios';
+import Cart from './pages/Cart.js'
 
 export let Context1 = createContext() // Context API 사용 세팅 1. context란 state 보관함을 하나 만들어줌
 
@@ -23,7 +24,7 @@ function App() {
           <Navbar.Brand href="#home">SinShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/detail/0') }}>Detail</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/Detail/0') }}>Detail</Nav.Link>
             <Nav.Link onClick={() => { navigate(1) }}>앞으로가기</Nav.Link>
             <Nav.Link onClick={() => { navigate(-1) }}>뒤로가기</Nav.Link>
           </Nav>
@@ -64,12 +65,13 @@ function App() {
           </>
         } />
       
-        {/* <Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/> URL 파라미터: /:파라미터값 */}
-        <Route path="/detail/:id" element={ 
+        {/* <Route path="/Detail/:id" element={ <Detail shoes={shoes}/> }/> URL 파라미터: /:파라미터값 */}
+        <Route path="/Detail/:id" element={ 
           <Context1.Provider value={ {stock, shoes} }> {/* Context API 사용 세팅 2. <Context>로 원하는 컴포넌트 감싸기 */}
             <Detail shoes={shoes}/> {/* Context API 사용 세팅 3. value={ {넘길 값1 넣기, 넘길 값2 넣기} } */}
           </Context1.Provider>
         }/>
+        <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<div>404 Pages</div>} /> // * : Route에 정해두지 않은 모든 주소
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버</div>} /> {/* <Route>태그안에 태그 사용:  Nested Routes */}
