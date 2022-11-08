@@ -1,14 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Nav} from 'react-bootstrap';
-
-import {Context1} from '../App.js' // Context API 사용 1. Context를 import
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { Context1 } from '../App.js'; // Context API 사용 1. Context를 import
+import { useDispatch } from "react-redux";
+import { addItem } from './../store.js';
 
 function Detail(props){
 
   let {stock} = useContext(Context1) // Context API 사용 2. useContext(Context) - 사용시 보관함 해체
   let [alert, setAlert] = useState(true)
   let [tab, setTab] = useState(0)
+  let dispatch = useDispatch()
   
   /* 2초 뒤에 사라지는 박스 */
   useEffect(() => { // useEffect 안에 있는 코드는 HTML 랜더링 후에 동작
@@ -56,7 +58,10 @@ function Detail(props){
           <h4 className="pt-5">{ shoesId.title }</h4>
           <p>{ shoesId.content }</p>
           <p>{ shoesId.price }</p>
-          <button className="btn btn-danger">주문하기</button> 
+          <button className="btn btn-danger" onClick={() => {
+            dispatch(addItem({ id : shoesId.id, name : shoesId.title, count : 1 }))
+            // dispatch(addItem({ id : 1, name : '신발', count : 1 }))
+          }}>주문하기</button> 
         </div>
       </div>
 
