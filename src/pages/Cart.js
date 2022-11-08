@@ -1,31 +1,46 @@
 import {Table} from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeName } from '../store';
 
 function Cart(){
 
   /* Redux store에서 state 가져옴 */
-  // let a = useSelector((state) => { return state }) // return하는 것만 가져다 씀
-  let a = useSelector((state) => state ) // 중괄호 return은 축약가능
-  console.log(a) // ex) return state.stock이면 a = stock 값만 나옴
+  // let state = useSelector((state) => { return state }) // return하는 것만 가져다 씀
+  let state = useSelector((state) => state ) // 중괄호 return은 축약가능
+  console.log(state) // ex) return state.stock이면 state = stock 값만 나옴
+  console.log(state.stock[0].name);
+
+  let dispatch = useDispatch() // store.js로 요청을 보내주는 함수
 
   return (
     <div>
+        { state.user }의 장바구니
       <Table>
         <thead>
           <tr>
             <th>#</th>
             <th>상품명</th>
-            <th>{a.stock}</th> {/* store에서 가져온 값 바인딩 */}
+            <th>수량</th>
             <th>변경하기</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>안녕</td>
-            <td>안녕</td>
-            <td>안녕</td>
-          </tr>
+          {
+            state.stock.map((a, i) => {
+              return (
+                <tr key={i}>
+                  <td>1</td>
+                  <td>{state.stock[i].name}</td> {/* store에서 가져온 값 바인딩 */}
+                  <td>{state.stock[i].count}</td>
+                  <td>
+                    <button onClick={() => {
+                      dispatch(changeName()) // dispatch(state변경함수()
+                    }}>+</button>
+                  </td>
+                </tr>
+              )  
+            })
+          }
         </tbody>
       </Table> 
     </div>
