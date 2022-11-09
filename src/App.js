@@ -6,6 +6,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/Detail';
 import axios from 'axios';
 import Cart from './pages/Cart.js'
+import { useEffect } from 'react';
 
 export let Context1 = createContext() // Context API 사용 세팅 1. context란 state 보관함을 하나 만들어줌
 
@@ -14,6 +15,20 @@ function App() {
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]) // 재고
   let navigate = useNavigate(); // 페이지 이동을 도와줌  *훅(= 유용한 함수들이 들어있음)
+
+  /* localStorage */
+  let obj = { name : 'Kim' }
+  localStorage.setItem('data', JSON.stringify(obj))
+  let getData = localStorage.getItem('data')
+  console.log((getData)) // {"name":"Kim"}
+  console.log(JSON.parse(getData)) // {name: 'Kim'}
+
+  /* 최근 본 상품 UI */
+  useEffect(() => {
+    if (localStorage.getItem('watched') == null) {
+      localStorage.setItem('watched', JSON.stringify( [] ))
+    }
+  }, [])
 
   return (
     <div className="App">
@@ -109,10 +124,11 @@ function About() {
 
 function Card(props){
   let [img] = useState(props.shoes.img );
+  let detail = '/Detail/'+ props.shoes.id;
 
   return (
     <div className="col-md-4">
-      <img src={ img } width="80%" />
+      <a href={ detail }><img src={ img } width="80%" /></a>
       <h4>{ props.shoes.title }</h4>
       <p>{ props.shoes.price }원</p>
     </div>

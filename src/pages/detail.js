@@ -11,7 +11,19 @@ function Detail(props){
   let [alert, setAlert] = useState(true)
   let [tab, setTab] = useState(0)
   let dispatch = useDispatch()
+  let {id} = useParams();
+  let [count, setCount] = useState(0)
+  let shoesId = props.shoes.find(a => a.id == id );
   
+
+  /* 최근 본 상품 UI  */
+  useEffect(() => {
+    let getWatched = localStorage.getItem('watched') // 값 꺼내서
+    getWatched = JSON.parse(getWatched)
+    getWatched.push(shoesId.id) // 수정 후
+    localStorage.setItem('watched', JSON.stringify(getWatched)) // 다시 넣기
+  }, [])
+
   /* 2초 뒤에 사라지는 박스 */
   useEffect(() => { // useEffect 안에 있는 코드는 HTML 랜더링 후에 동작
     let timerBox = setTimeout(() => { setAlert(false) }, 2000);
@@ -32,10 +44,6 @@ function Detail(props){
     }
 
   }, [num])
-
-  let {id} = useParams();
-  let [count, setCount] = useState(0)
-  let shoesId = props.shoes.find((a) => a.id == id );
 
   return (
     <div className="container">
