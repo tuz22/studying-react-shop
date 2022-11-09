@@ -7,6 +7,7 @@ import Detail from './pages/Detail';
 import axios from 'axios';
 import Cart from './pages/Cart.js'
 import { useEffect } from 'react';
+import { useQuery } from 'react-query';
 
 export let Context1 = createContext() // Context API 사용 세팅 1. context란 state 보관함을 하나 만들어줌
 
@@ -30,6 +31,25 @@ function App() {
     }
   }, [])
 
+  /* 반가워요 user */
+  // axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
+  //   a.data
+  // })
+  
+  // react-query 사용
+  let result = useQuery('greet', () => 
+    axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
+      console.log('요청!')
+      return a.data
+    }),
+    /* refetch 간격 설정 */
+    { staleTime : 2000 } // 2초 안에는 refetch 안됨
+  )
+  /*
+  result.data // 요청 성공시 data 가져옴
+  result.isLoading // 요청중일 때 true
+  result.error // 요청 실패시 true
+  */
   return (
     <div className="App">
 
@@ -39,9 +59,15 @@ function App() {
           <Navbar.Brand href="#home">SinShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/Detail/0') }}>Detail</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
             <Nav.Link onClick={() => { navigate(1) }}>앞으로가기</Nav.Link>
             <Nav.Link onClick={() => { navigate(-1) }}>뒤로가기</Nav.Link>
+          </Nav>
+          <Nav className="ms-auto">
+            {/* { result.isLoading ? '로딩중' : result.data.name } */}
+            { result.isLoading && '로딩중' }
+            { result.error && '에러남' }
+            { result.data && result.data.name }
           </Nav>
         </Container>
       </Navbar>
