@@ -5,6 +5,7 @@ import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import UseTransTest, { useTransTest } from './useTransTest.js';
 // import Detail from './pages/Detail';
 // import Cart from './pages/Cart.js'
 const Detail = lazy(() => import('./pages/Detail.js'));
@@ -61,6 +62,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/test') }}>Test</Nav.Link>
             <Nav.Link onClick={() => { navigate(1) }}>앞으로가기</Nav.Link>
             <Nav.Link onClick={() => { navigate(-1) }}>뒤로가기</Nav.Link>
           </Nav>
@@ -126,6 +128,7 @@ function App() {
           <Route path="one" element={<div>첫 주문시 배달비 무료!</div>} />
           <Route path="two" element={<div>생일 기념 쿠본받기</div>} />
         </Route>
+        <Route path="/test" element={<UseTransTest />}/>
       </Routes>
       </Suspense>
       
