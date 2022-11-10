@@ -1,13 +1,14 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import './App.css';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './pages/Detail';
 import axios from 'axios';
-import Cart from './pages/Cart.js'
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+// import Detail from './pages/Detail';
+// import Cart from './pages/Cart.js'
+const Detail = lazy(() => import('./pages/Detail.js'));
+const Cart = lazy(() => import('./pages/Cart.js'));
 
 export let Context1 = createContext() // Context API 사용 세팅 1. context란 state 보관함을 하나 만들어줌
 
@@ -72,6 +73,7 @@ function App() {
         </Container>
       </Navbar>
       
+      <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={
           <>
@@ -108,9 +110,11 @@ function App() {
       
         {/* <Route path="/Detail/:id" element={ <Detail shoes={shoes}/> }/> URL 파라미터: /:파라미터값 */}
         <Route path="/Detail/:id" element={ 
-          <Context1.Provider value={ {stock, shoes} }> {/* Context API 사용 세팅 2. <Context>로 원하는 컴포넌트 감싸기 */}
-            <Detail shoes={shoes}/> {/* Context API 사용 세팅 3. value={ {넘길 값1 넣기, 넘길 값2 넣기} } */}
-          </Context1.Provider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Context1.Provider value={ {stock, shoes} }> {/* Context API 사용 세팅 2. <Context>로 원하는 컴포넌트 감싸기 */}
+              <Detail shoes={shoes}/> {/* Context API 사용 세팅 3. value={ {넘길 값1 넣기, 넘길 값2 넣기} } */}
+            </Context1.Provider>
+          </Suspense>
         }/>
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<div>404 Pages</div>} /> // * : Route에 정해두지 않은 모든 주소
@@ -123,7 +127,7 @@ function App() {
           <Route path="two" element={<div>생일 기념 쿠본받기</div>} />
         </Route>
       </Routes>
-
+      </Suspense>
       
 
     </div>
